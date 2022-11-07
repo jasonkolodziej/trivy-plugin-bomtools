@@ -1,5 +1,9 @@
 #!/bin/bash
-
+LATEST_CDX_VERSION=$(curl -sSL https://api.github.com/repos/cyclonedx/cyclonedx-cli/releases/latest \
+                   | grep '"name":' \
+                   | head -1 \
+                   | cut -d : -f 2,3 \
+                   | tr -d '[:space:]\",')
 echo ${PWD}
 echo ${GOOS} ${GOARCH}
 # Usage
