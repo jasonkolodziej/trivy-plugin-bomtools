@@ -6,7 +6,7 @@
 name: "bomtools"
 repository: github.com/jasonkolodziej/trivy-plugin-bomtools
 # version: The version of the plugin. (required)
-version: ${LATEST_CDX_VERSION}
+version: 0.24.2
 # usage: A short usage description. (required)
 usage: manipulate bom manifests
 
@@ -26,7 +26,7 @@ platforms:
       os: darwin
    # uri: ./trivy-kubectl # where the execution file is (local file, http, git, etc.)
    # bin: ./trivy-kubectl # path to the execution file
-    uri: https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${LATEST_CDX_VERSION}/cyclonedx-osx-${GOARCH}
+    uri: https://github.com/CycloneDX/cyclonedx-cli/releases/download/v0.24.2/cyclonedx-osx-${GOARCH}
     bin: ./cyclonedx-osx-${GOARCH}
   - selector: # optional
       os: windows
