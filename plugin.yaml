@@ -24,10 +24,18 @@ description: |-
 platforms:
   - selector: # optional
       os: darwin
+      arch: arm64
    # uri: ./trivy-kubectl # where the execution file is (local file, http, git, etc.)
    # bin: ./trivy-kubectl # path to the execution file
-    uri: https://github.com/CycloneDX/cyclonedx-cli/releases/download/v0.24.2/cyclonedx-osx-${GOARCH}
-    bin: ./cyclonedx-osx-${GOARCH}
+    uri: https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${LATEST_CDX_VERSION}/cyclonedx-osx-arm64
+    bin: ./cyclonedx-osx-arm64
+  - selector: # optional
+      os: darwin
+      arch: amd64
+   # uri: ./trivy-kubectl # where the execution file is (local file, http, git, etc.)
+   # bin: ./trivy-kubectl # path to the execution file
+    uri: https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${LATEST_CDX_VERSION}/cyclonedx-osx-amd64
+    bin: ./cyclonedx-osx-amd64
   - selector: # optional
       os: windows
    # uri: ./trivy-kubectl # where the execution file is (local file, http, git, etc.)
