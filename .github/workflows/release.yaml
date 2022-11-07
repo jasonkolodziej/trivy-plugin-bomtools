@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Replace
+        run: source .env; envsubst < plugin.yaml.tmp > plugin.yaml
       - name: Compress
         run: tar -zcvf trivy-bomtools.tar.gz trivy-bomtools LICENSE .env
       - name: Release
