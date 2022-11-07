@@ -2,8 +2,8 @@ name: Release
 
 on:
   push:
-    tags:
-      - "v*"
+    # tags:
+    #   - "v*"
 
 jobs:
   build:
@@ -11,6 +11,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Capture Version
+        run: |
+          echo $(curl -sSL https://api.github.com/repos/${GITHUB_ORG_USR}/${GITHUB_REPO}/releases/latest \
+                   | grep '"name":' \
+                   | head -1 \
+                   | cut -d : -f 2,3 \
+                   | tr -d '[:space:]\",')
       - name: Replace
         run: source .env; envsubst < plugin.yaml.tmp > plugin.yaml
       - name: Compress
