@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Compress
-        run: tar -zcvf trivy-bomtools.tar.gz trivy-bomtools LICENSE
+        run: tar -zcvf trivy-bomtools.tar.gz trivy-bomtools LICENSE .env
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
