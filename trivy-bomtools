@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo ${PWD}
+echo ${GOOS} ${GOARCH}
 # Usage
 function usage() {
   cat << EOS >&2
