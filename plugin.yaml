@@ -1,23 +1,68 @@
-name: "kubectl"
-repository: github.com/aquasecurity/trivy-plugin-kubectl
-version: "0.1.0"
-usage: scan kubectl resources
+# name: "kubectl"
+# The plugin.yaml field should contain the following information:
+
+# name: The name of the plugin. This also determines how the plugin will be made available in the Trivy CLI. 
+# For example, if the plugin is named kubectl, you can call the plugin with trivy kubectl. (required)
+name: "bomtools"
+repository: github.com/jasonkolodziej/trivy-plugin-bomtools
+# version: The version of the plugin. (required)
+version: ${LATEST_CDX_VERSION}
+# usage: A short usage description. (required)
+usage: manipulate bom manifests
+
+# description: A long description of the plugin. This is where you could provide a helpful documentation of your plugin. (required)
 description: |-
   A Trivy plugin that scans the images of a kubernetes resource.
-  Usage: trivy kubectl TYPE[.VERSION][.GROUP] NAME
+  Usage: trivy bomtools TYPE[.VERSION][.GROUP] NAME
+
+# platforms: (required)
+#   - selector: The OS/Architecture specific variations of a execution file. (optional)
+#       os: OS information based on GOOS (linux, darwin, etc.) (optional)
+#       arch: The architecture information based on GOARCH (amd64, arm64, etc.) (optional)
+#     uri: Where the executable file is. Relative path from the root directory of the plugin or remote URL such as HTTP and S3. (required)
+#     bin: Which file to call when the plugin is executed. Relative path from the root directory of the plugin. (required)
 platforms:
   - selector: # optional
       os: darwin
-      arch: amd64
-    uri: ./trivy-kubectl # where the execution file is (local file, http, git, etc.)
-    bin: ./trivy-kubectl # path to the execution file
+   # uri: ./trivy-kubectl # where the execution file is (local file, http, git, etc.)
+   # bin: ./trivy-kubectl # path to the execution file
+    uri: https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${LATEST_CDX_VERSION}/cyclonedx-osx-${GOARCH}
+    bin: ./cyclonedx-osx-${GOARCH}
+  - selector: # optional
+      os: windows
+   # uri: ./trivy-kubectl # where the execution file is (local file, http, git, etc.)
+   # bin: ./trivy-kubectl # path to the execution file
+    uri: https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${LATEST_CDX_VERSION}/cyclonedx-win-${GOARCH}
+    bin: ./cyclonedx-win-${GOARCH}
   - selector: # optional
       os: linux
-      arch: amd64
-    uri: https://github.com/aquasecurity/trivy-plugin-kubectl/releases/download/v0.1.0/trivy-kubectl.tar.gz
-    bin: ./trivy-kubectl
-  - selector:
-      os: darwin
-      arch: arm64
-    uri: ./trivy-kubectl
-    bin: ./trivy-kubectl
+   # uri: ./trivy-kubectl # where the execution file is (local file, http, git, etc.)
+   # bin: ./trivy-kubectl # path to the execution file
+    uri: https://github.com/CycloneDX/cyclonedx-cli/releases/download/v${LATEST_CDX_VERSION}/cyclonedx-linux-${GOARCH}
+    bin: ./cyclonedx-linux-${GOARCH}
+  # - selector: # optional
+  #     os: darwin
+  #     arch: arm64
+  #  # uri: ./trivy-kubectl # where the execution file is (local file, http, git, etc.)
+  #  # bin: ./trivy-kubectl # path to the execution file
+  #   uri: https://github.com/CycloneDX/cyclonedx-cli/releases/download/v0.24.2/cyclonedx-osx-arm64
+
+  # - selector: # optional
+  #     os: linux
+  #     arch: amd64
+  #   uri: https://github.com/aquasecurity/trivy-plugin-kubectl/releases/download/v0.1.0/trivy-kubectl.tar.gz
+  #   bin: ./trivy-kubectl
+  # - selector:
+  #     os: darwin
+  #     arch: arm64
+  #   uri: ./trivy-kubectl
+  #   bin: ./trivy-kubectl
+
+# The following rules will apply in deciding which platform to select:
+# If both os and arch under selector match the current platform, search will stop and the platform will be used.
+# If selector is not present, the platform will be used.
+# If os matches and there is no more specific arch match, the platform will be used.
+# If no platform match is found, Trivy will exit with an error.
+# After determining platform, Trivy will download the execution file from uri and store it in the plugin cache. When the plugin is called via Trivy CLI, bin command will be executed.
+
+# The plugin is responsible for handling flags and arguments. Any arguments are passed to the plugin from the trivy command.
