@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Capture Version
         run: |
-          LATEST_CDX_VERSION=$(curl -sSL https://api.github.com/repos/${GITHUB_ORG_USR}/${GITHUB_REPO}/releases/latest \
+          export LATEST_CDX_VERSION=$(curl -sSL https://api.github.com/repos/${GITHUB_ORG_USR}/${GITHUB_REPO}/releases/latest \
                    | grep '"name":' \
                    | head -1 \
                    | cut -d : -f 2,3 \
