@@ -1,15 +1,30 @@
 #!/bin/bash
+# source ./.env
+
 LATEST_CDX_VERSION=$(curl -sSL https://api.github.com/repos/cyclonedx/cyclonedx-cli/releases/latest \
                    | grep '"name":' \
                    | head -1 \
                    | cut -d : -f 2,3 \
                    | tr -d '[:space:]\",')
-echo ${PWD}
+
+PLUGIN_HOME="${HOME}/.trivy/plugins/${GIT_REPO}"
 echo ${GOOS} ${GOARCH}
+
+if [ ! -f ${PLUGIN_HOME}/cdx-cli ]
+then
+    echo "${PLUGIN_HOME}/cdx-cli does not exist in Bash"
+    curl -o ${PLUGIN_HOME}/cdx-cli ${LATEST_CDX_VERSION}
+    chmod +x curl -o ${PLUGIN_HOME}/cdx-cli
+# else
+#     echo "File found. Do something meaningful here"
+fi
+
+
+
 # Usage
 function usage() {
   cat << EOS >&2
-Usage: trivy kubectl [-h,--help] TYPE NAME [TRIVY OPTION]
+Usage: trivy ${GIT_REPO} [-h,--help] TYPE NAME [TRIVY OPTION]
  A Trivy plugin that scans the images of a kubernetes resource.
 
 Options:
@@ -17,13 +32,13 @@ Options:
 
 Examples:
   # Scan a Pod
-  trivy bomtools pod mypod
+  trivy ${GIT_REPO} pod mypod
 
   # Scan a Deployment
-  trivy bomtools deployment mydeployment -n mynamespace
+  trivy ${GIT_REPO} deployment mydeployment -n mynamespace
 
   # Scan a Job and filter by severity
-  trivy bomtools job myjob -n mynamespace -- --severity CRITICAL
+  trivy ${GIT_REPO} job myjob -n mynamespace -- --severity CRITICAL
 EOS
   exit
 }
@@ -39,7 +54,7 @@ if [[ ($# -eq 0) || ($1 == "--help") || ($1 == "-h") ]]; then
   usage
 fi
 
-KUBECTL_PARAM=()
+REPO_PARAM=()
 for opt in "$@"; do
   case "${opt}" in
     '--' )
@@ -57,7 +72,7 @@ for opt in "$@"; do
 done
 
 
-images=$(kubectl get "${KUBECTL_PARAM[@]}" -oyaml | sed -nE 's@[^\w]*image: ([a-zA-Z0-9/:])@\1@p' | uniq)
+images=$(kubectl get "${REPO_PARAM[@]}" -oyaml | sed -nE 's@[^\w]*image: ([a-zA-Z0-9/:])@\1@p' | uniq)
 while read -r image; do
   if [ -n "$image" ]; then
     scan "${TRIVY_PARAM[@]}" "$image"
