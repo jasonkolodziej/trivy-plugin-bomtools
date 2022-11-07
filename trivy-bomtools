@@ -16,7 +16,7 @@ if [ ! -f ${PLUGIN_HOME}/cdx-cli ]
 then
     echo "${PLUGIN_HOME}/cdx-cli does not exist in Bash"
     curl -o ${PLUGIN_HOME}/cdx-cli ${LATEST_CDX_VERSION}
-    chmod +x curl -o ${PLUGIN_HOME}/cdx-cli
+    chmod +x ${PLUGIN_HOME}/cdx-cli
 # else
 #     echo "File found. Do something meaningful here"
 fi
