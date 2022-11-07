@@ -6,7 +6,9 @@ on:
       - "v*"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+env:
+  GITHUB_ORG_USR: cyclonedx
+  GITHUB_REPO: cyclonedx-cli
 jobs:
   build:
     runs-on: ubuntu-latest
