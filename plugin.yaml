@@ -27,14 +27,14 @@ platforms:
       arch: arm64
    # uri: ./trivy-kubectl # where the execution file is (local file, http, git, etc.)
    # bin: ./trivy-kubectl # path to the execution file
-    uri: https://github.com/jasonkolodziej/trivy-plugin-bomtools/releases/download/v0.24.2/cyclonedx-osx-arm64
+    uri: https://github.com/jasonkolodziej/trivy-plugin-bomtools/releases/download/v0.24.2/trivy-bomtools
     bin: ./cyclonedx-osx-arm64
   - selector: # optional
       os: darwin
       arch: amd64
    # uri: ./trivy-kubectl # where the execution file is (local file, http, git, etc.)
    # bin: ./trivy-kubectl # path to the execution file
-    uri: https://github.com/jasonkolodziej/trivy-plugin-bomtools/releases/download/v0.24.2/cyclonedx-osx-amd64
+    uri: https://github.com/jasonkolodziej/trivy-plugin-bomtools/releases/download/v0.24.2/trivy-bomtools
     bin: ./cyclonedx-osx-amd64
   - selector: # optional
       os: windows
