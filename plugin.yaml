@@ -46,7 +46,7 @@ platforms:
       os: linux
    # uri: ./trivy-kubectl # where the execution file is (local file, http, git, etc.)
    # bin: ./trivy-kubectl # path to the execution file
-    uri: https://github.com/CycloneDX/cyclonedx-cli/releases/download/v0.24.2/cyclonedx-linux-
+    uri: https://github.com/CycloneDX/cyclonedx-cli/releases/download/v0.24.2/cyclonedx-linux-arm64.tar.gz
     bin: ./cyclonedx-linux-
   # - selector: # optional
   #     os: darwin
